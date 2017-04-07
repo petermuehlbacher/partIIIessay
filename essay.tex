@@ -14,6 +14,8 @@
 \usepackage{color}
 \usepackage{soul}
 \usepackage{todonotes}
+\usepackage[perpage]{footmisc}
+
 %\usepackage{fontspec}
 %\usepackage{arydshln}
 
@@ -78,7 +80,7 @@
 
 
 
-\newcommand{\fa}{{\frak a}} 
+\newcommand{\fa}{{\frak a}}
 \newcommand{\bk}{{\bf{k}}}
 \newcommand{\ttau}{\vartheta}
 
@@ -140,6 +142,7 @@
 
 \newcommand{\fq}{{\frak q}}
 \newcommand{\fu}{{\frak u}}
+\newcommand{\fh}{{\frak h}}
 \newcommand{\bm}{{\bf  m }}
 \newcommand{\bmu}{\mbox{\boldmath $\mu$}}
 \newcommand{\sa}{{[\alpha ]}}
@@ -267,6 +270,7 @@
 \marginsize{35mm}{35mm}{38mm}{40mm}
 
 \begin{document}
+\tableofcontents
 
 \section*{Notation}
 \begin{itemize}
@@ -274,10 +278,10 @@
 	\item For $X$ being a random variable on some probability space $(\Omega, \mathcal A, \mathbb P)$ write $\mathcal L(X)$ for the law of a random variable $X$, i.e. the pushforward measure $\mathcal L(X)\deq \mathbb P\circ X^{-1}$.
 	\item For a topological space $S$ denote its Borel-$\sigma$-algebra by $\mathcal B_S$.
 	\item For a topological vector space $V$ write $V^*$ for its topological/continuous dual space, i.e. the set of all continuous, linear functionals $f:V\rightarrow\mathbb R$.
-	\item Unless stated otherwise the probability spaces we are working with will implicitly assumed to be $(\Omega,\mathcal A,\mathbb P)$.
-	\item $(f,g)$ for the $L^2$ inner product $\int_D f(x)g(x)dx$ on some space $D$ which is usually clear from context; by abuse of notation (justified by Riesz) we will also write use this notation for more general objects like distributions/linear functionals that are not in $L^2$
-	% that's kinda the wrong way round, actually we can define the standard inner product by integration by parts and the inverse Laplacian
-	\item $(f,g)_\nabla$ for the Dirichlet inner product $(\nabla f,\nabla g)$; again, by abuse of notation (justified by integration by parts), we will use it also for more general elements $f,g$ for which $(f,g)_\nabla = -(f,\Delta g)$ is well-defined
+	\item Unless stated otherwise the probability spaces we are working with will implicitly assumed to be $(\Omega,\mathcal A,\mathbb P)$ and $(H,\mathcal A, \mathbb P)$ for the Gaussian free field $h$.
+	\item $(f,g)$ for the $L^2$ inner product $\int_D f(x)g(x)dx$ on some space $D$ which is usually clear from context; by abuse of notation (justified by Riesz) we will also write use this notation for more general objects like distributions/linear functionals that are not in $L^2$.
+	\todo{that's kinda the wrong way round, actually we can define the standard inner product by integration by parts and the inverse Laplacian}
+	\item $(f,g)_\nabla$ for the Dirichlet inner product $(\nabla f,\nabla g)$; again, by abuse of notation (justified by integration by parts), we will use it also for more general elements $f,g$ for which $(f,g)_\nabla = -(f,\Delta g)$ is well-defined.
 	\item Write $H(D)$ (or often just $H$ and $H^1(D)$ to highlight it is a Sobolev space) for the Hilbert space completion of $H_s(D)$, the space of smooth functions, compactly supported in $D$, with respect to $(\cdot,\cdot)_\nabla$.
 \end{itemize}
 
@@ -368,29 +372,35 @@ Indeed we have the following theorem:
 	if and only if $\text{dim }H=\infty$.
 \end{rem}
 
-\begin{rem}[In what space will $X$ be?]\label{rem:spaceofX}
+\begin{rem}[$X$ as distribution]\label{rem:spaceofX}
 	Now given the RKHS $H$ it is not immediate in what space $B$ the random variable $X$ (induced by the Karhunen-Lo\`eve expansion, i.e. $X\deq \sum_k h_kg_k$ using the notation from the theorem) will be. Indeed, this choice is rather arbitrary in general, as can be seen in the first section of \cite{She07} about abstract Wiener spaces.
 	
 	However, we may, informally, regard $B$ as a subset of a ``dual space'' $H'$, which is defined as the set of all $h=\sum_{k=1}^{\text{dim }H}h_ke_k$ (where $e_k$ is an \emph{ordered} orthonormal basis of $H$) with the property that the partial sums$\sum_{k=1}^n h_kf_k$ converge in $\mathbb R$ for every $f=\sum_{k=1}^{\text{dim }H}f_ke_k$.
 	
-	The reason to require a fixed ordering is the following calculation\todo{actually it always converges against the same limit, no matter which order we take, so shouldn't that take care of this restriction?}, where $h^n\deq \sum_{k=1}^n h_ke_k$ and $g_k\iidnormal$:
+	The reason to require a fixed ordering is the following calculation, where $h^n\deq \sum_{k=1}^n h_ke_k$ and $g_k\iidnormal$:
 	
 	\underline{$L^2$ convergence:}
-	$$\mathbb E(h^n,f)_H^2 \eqbydef \mathbb E(\sum_{k=1}^n g_k f_k)^2 \eqby{g_k\iidnormal} \sum_{k=1}^n f_k^2$$ converges against $\|f\|_H^2$.
+	\begin{equation}\label{eq:varianceofHasRandomDistribution}
+		\mathbb E(h^n,f)_H^2 \eqbydef \mathbb E\left(\sum_{k=1}^n g_k f_k\right)^2 \eqby{g_k\iidnormal} \sum_{k=1}^n f_k^2
+	\end{equation} converges against $\|f\|_H^2$.
 	
 	\underline{Almost sure convergence:} $L^2$ convergence implies convergence in probability, which in turn, by Levy's equivalence theorem (the $g_k$ are independent), implies almost sure convergence of the \emph{partial sums} given a fixed ordering.
 	
-	%This restriction is not artificially introduced by a lack of means to show the stronger result of $X\eqbydef \sum_k h_kg_k$ being in the topological dual space $H^*$ since this would, by Riesz, imply that $X$ is actually in $H$ - a contradiction to remark \ref{rem:XnotinRKHS} in our infinite dimensional setting.
+	This restriction is not artificially introduced by a lack of means to show the stronger result of $X\eqbydef \sum_k h_kg_k$ being in the topological dual space $H^*$ since this would, by Riesz, imply that $X$ is actually in $H$ - a contradiction to remark \ref{rem:XnotinRKHS} in our infinite dimensional setting.
+	
+	However, it can be shown (as in \cite{She07}) that $X$ is indeed a distribution, i.e. a continuous (with respect to the topology of uniform convergence of all derivatives) linear functional on the space of smooth compactly supported functions $H_s$. By the above remark its continuity cannot be preserved when extending it to the larger space $H^1$ where it is only a linear functional.
+	
+	Note that (in two dimensions, i.e. $D\subseteq\mathbb R^2$) there is in fact a unique extension since $h$ is not only a distribution, but in a sense ``arbitrarily close'' to being in $L^2$\todo{check that this L2 thing is enough to extend it to H and not only any distribution}, i.e. $h\in (-\Delta)^\eps L^2(D)$ for all $\eps>0$. Naturally continuity on a dense subset (here $H_s$ dense in $H^1$) alone does not suffice for a well-defined extension to $(H^1)^*$ - take for example $\nabla\delta_0$ and see that it cannot be well defined for $f\in H$ since the derivative of $f$ only needs to be in $L^2$ which is not defined pointwise.
 \end{rem}
 
-While we \emph{could} define the Gaussian free field that way, i.e. as a sum of orthonormal basis elements weighted by iid normals, it has the aesthetic drawback of being somewhat arbitrary. Instead we will be slightly less explicit and define it to be the dual process of $X$ as described in remark \ref{rem:spaceofX} with the following adaption of the RKHS of the Wiener process: Noting that Brownian motion on $[0,1]$ is induced by the Sobolev space $H^1([0,1])$ it seems natural to investigate the random variable induced by the RKHS $H^1(D)$ for some domain $D\subseteq\mathbb R^d$. An easy (formal) calculation also gives the covariances for the dual process as given in the following definition:
+While we \emph{could} define the Gaussian free field that way, i.e. as a sum of orthonormal basis elements weighted by iid normals, it has the aesthetic drawback of being somewhat arbitrary and a priori not being well defined for general $f\in H(D)$, but only for $f\in H_s(D)$. Instead we will be slightly less explicit and define it to be the dual process of $X$ as described in remark \ref{rem:spaceofX} with the following adaption of the RKHS of the Wiener process: Noting that Brownian motion on $[0,1]$ is induced by the Sobolev space $H^1([0,1])$ it seems natural to investigate the random variable induced by the RKHS $H^1(D)$ for some domain $D\subseteq\mathbb R^d$. An easy (formal) calculation (just like \eqref{eq:varianceofHasRandomDistribution}, but for $\mathbb E(h^n,f)_H(h^n,g)_H$) for $X$ as above motivates the covariances for the dual process as given in the following definition:
 
 \begin{defi}[Gaussian Free Field]
 	The Gaussian free field on a domain $D\subseteq\mathbb R^d$ is the centered Gaussian process $$h\deq ((h,f)_\nabla : f\in H(D))$$ with covariance structure $$\mathbb E[(h,a)_\nabla(h,b)_\nabla]\deq (a,b)_\nabla.$$
 \end{defi}
 Note that this is well-defined by lemma \ref{lem:existenceofGPgivenCov}.
 \begin{rem}
-	It follows immediately that $f\mapsto (h,f)_\nabla$ is linear and that for every $f\in H(D)$ we have that $(h,f)_\nabla\sim\mathcal N(0,\|f\|_{H(D)})$.
+	It follows easily from the definition that $f\mapsto (h,f)_\nabla$ is linear and that for every $f\in H(D)$ we have that $(h,f)_\nabla\sim\mathcal N(0,\|f\|_{H(D)})$.
 \end{rem}
 
 \begin{rem}
@@ -407,7 +417,7 @@ Note that this is well-defined by lemma \ref{lem:existenceofGPgivenCov}.
 
 \begin{rem}[Importance of Green's Function]\label{rem:usesofGreensfct}
 	One of the reasons the Green's function is so important is that it can be seen as the distributional solution of $-\Delta G^x = \delta_x$. 
-	Noting that by integration by parts\todo{for smooth rho the derivative of a distribution is actually defined by something resembling the integration by parts formula - make that precise} we view $(h,\rho)\deq -(h,\Delta^{-1}\rho)_\nabla$ as being well-defined for all $\rho$ that can be written as $\rho = -\Delta f$ for some $f\in H(D)$.
+	Noting that by viewing $h$ as a distribution we would immediately get\footnote{The derivative of a distribution (motivated by integration by parts) is defined by $(\nabla h,\rho)\deq(h,-\nabla\rho)$ for smooth test functions $\rho$.} $(h,\rho)\eqbydef -(h,\Delta^{-1}\rho)_\nabla$ for smooth compactly supported $\rho$  we just take (equivalently to viewing $(h,f)_\nabla$ as well defined for all $f\in H$) $(h,\rho)\deq -(h,\Delta^{-1}\rho)_\nabla$ to be well-defined for all $\rho$ that can be written as $\rho = -\Delta f$ for some $f\in H(D)$.
 \end{rem}
 
 \begin{rem}[Qualitative Difference of GFF in Different Dimensions]
@@ -430,39 +440,61 @@ We recall the following properties of Green's functions in $\mathbb C$:
 
 \subsection{Properties}
 
-\subsubsection{Covariances}
+%\subsubsection{Covariances}
 
-%one might start directly with the more formal definition of a GFF as a dual process of some rv $h$ with the covariances induced by the following hilbert space isomorphism:
-\todo{discuss this alternative approach with Nickl}
+%Writing $[-\Delta^{-1}\rho](x) = \int_D G^x(y)\rho(y)dy$ easily gives the following proposition
 
-%\begin{lem}[Covariances]
-%$$\mathbb E[(h,a)_\nabla (h,b)_\nabla] = (a,b)_\nabla$$
-%\end{lem}
-
-integrating by parts and writing $[-\Delta^{-1}\rho](x) = \int_D G^x(y)\rho(y)dy$ directly gives the following corollary
-
-\begin{cor}
-	$$\mathbb E[(h,\rho_1) (h,\rho_2)]=\int_{D\times D}\rho_1(x)G(x,y)\rho_2(y)dxdy,$$
-for all $\rho_1,\rho_2 \in (-\Delta)H(D)$
-\end{cor}
+%\begin{pro}
+%	$$\mathbb E[(h,\rho_1) (h,\rho_2)]=\int_{D\times D}\rho_1(x)G(x,y)\rho_2(y)dxdy,$$
+%for all $\rho_1,\rho_2 \in (-\Delta)H(D)$.
+%\end{pro}
 
 \subsubsection{Markov Property}
 
-\begin{rem}[Motivation by Brownian Motion]
-	markov property of BM can be interpreted (equivalently stated as) BLABLABLA
+\begin{rem}[Motivation by Brownian Motion]\label{rem:alternativeMarkovforBM}
+	The Markov property of Brownian motion can also be stated as follows: Given a Brownian motion $B=(B_t)_{t\geq 0}$ then $B$ is equal in distribution to $B^{a,b}$ which is obtained by sampling a Brownian motion $B$, an independent Brownian bridge $\tilde B$ on $(a,b)$ (i.e. a Brownian motion conditioned to be zero on $\mathbb R^+\setminus(a,b)$), and taking
+	$$B^{a,b}_t\deq \begin{cases}
+      B_t, & \text{if}\ t\in\mathbb R^+\setminus(a,b) \\
+      b_t+\tilde B_t, & \text{if}\ t\in(a,b)
+    \end{cases}$$ where $(b_t)_{t\in(a,b)}$ linearly interpolates $B_a$ and $B_b$.
+	
+	This can be rephrased in a slightly more abstract (and less rigorous) way as ``given the values of a Brownian motion $B$ outside some open set $U=(a,b)$, the values in $U$ are equal in distribution to the projection on the harmonic part\footnote{Note that in one dimension the harmonic functions are just linear functions.} plus an independently sampled Brownian motion with zero boundary conditions on $(a,b)$''.
 \end{rem}
 
+We hope for something similar to hold for Gaussian free fields in two dimensions (with zero boundary conditions) as well. To make this rigorous we first have to define what we mean by the ``projection on the harmonic part'', so we define the following subspaces of $H=H(D)$:
+
 \begin{defi}
-	$H_U, H_U^\perp$
+	For $U\subseteq D$ open we write \begin{itemize}
+		\item $H_U$ for the closure (with respect to $(\cdot,\cdot)_\nabla$) of the set of smooth functions supported in some compact subset of $U$ and
+		\item $H_U^\perp\deq \{b\in H: \Delta b=0 \text{ on }U\}$, the functions which are harmonic on $U$.
+	\end{itemize}
 \end{defi}
 
-\begin{thm}\label{thm:MarkovProperty}
-	$H_U, H_U^\perp$ span $H(D)$
+\begin{rem}[Justification of the Definition]
+	Since $U$ is assumed to be open integration by parts\footnote{We need $U$ open since otherwise it could be that the intersection of a compact subset of $U$ and $\partial U$ is not empty, so $a\in H_U$ would not imply that $a$ has zero boundary conditions - hence introducing an additional (potentially non-zero) term when integrating by parts.} implies that for $a\in H_U, b\in H_U^\perp$ we have $$\mathbb E[(h,a)_\nabla(h,b)_\nabla]\eqbydef (a,b)_\nabla = -(a,\Delta b)=0,$$
+	so the two spaces are indeed orthogonal.
+\end{rem}
+
+\begin{rem}[Independence of Orthogonal Subspaces]
+	Note that, by definition of the covariance function for the Gaussian free field $\mathbb E[(h,a)_\nabla(h,b)_\nabla]\eqbydef(a,b)_\nabla$ and the fact that vanishing covariance implies independence for Gaussians, we have that $(h,\cdot)_\nabla$ restricted to orthogonal subspaces $H_1(D),H_2(D)\subseteq H(D)$ are independent of one another. Moreover, if $H_1(D),H_2(D)$ span $H(D)$ then $\mathcal F_{H_1},\mathcal F_{H_2}$, the smallest $\sigma$-algebras such that $(h,f)_\nabla$ are measurable for all $f$ in $H_1$,$H_2$ respectively, generate $\mathcal F$, the smallest $\sigma$-algebra making $(h,\cdot)_\nabla$ measurable. 
+\end{rem}
+
+\begin{thm}[Markov Property of the GFF]\label{thm:MarkovProperty}
+	The two subspaces $H_U(D), H_U^\perp(D)$, defined as above, span $H(D)$.
 \end{thm}
 
-so that is what we call Markov property in this case.
+This theorem tells us that we can write every $f\in H(D)$ as sum of elements from $H_U$ and $H_U^\perp$, which is, by the previous remark, analogous to the alternative statement of Brownian motion given in remark \ref{rem:alternativeMarkovforBM}.
 
-\todo{do I need to elaborate on the field exploration and general closed U part of Sheffield07?}
+\begin{proof}
+	By a density argument it suffices to show that every $f\in H_s(D)$, the space of smooth functions compactly supported in $D$, can be written as $a+b$, with $a\in H_U(D), b\in H_U^\perp$.
+	
+	\underline{The idea:} Intuitively we would like to set $b$ to be the unique continuous function which equals $f$ outside of $U$ and is harmonic inside of $U$, and then set $a=f-b$. However, if for example $U$ is the complement of a single point $z\in D$, then there is no unique $b$ which coincides with $f$ on $\{z\}$ and is harmonic on $U$. This is similar to trying to solve the Laplace equation in one dimension given only the initial value, but no derivatives which would be defined if we were ``allowed'' to know the values of $f$ in a neighbourhood of $z$ since $f\in H_s(D)$. This motivates the following approach:
+	
+	\underline{The problem:} We take the $\delta$-neighbourhood of the complement of $U$ (so that every point in the complement of $U$ gets a ``padding'' of $\delta$), take its complement $U_\delta\subseteq U$, and use the fact - well-known from probability - that the expectation of a function evaluated at the first exit point of Brownian motion of a set is harmonic in that set and (by definition) equal to the original function outside of that set.
+	
+	\underline{The solution:} More precisely, we take $$b_\delta(x)\deq \mathbb E_x(f(B_{\tau(\delta)})),$$ where $\tau(\delta)$ is the first time $t$ the Brownian motion $B_t$ exits $U_\delta$. Then $a_\delta\deq f-b_\delta$ is supported on a compact subset of $U$ and is in $H_{U_\delta}$, which is increasing (as $\delta\searrow 0$) family of subspaces of $H_U$. Now $a_\delta$ converges to some $a\in H_U$. Thus the $b_\delta$ must converge to some $b$ which has to be in $H_U^\perp$ since the $\|\cdot\|_\nabla$ limit of harmonic functions is harmonic (just like the $L^2$ limit of constant smooth functions is constant). 
+	We still have $f=a+b$ which finishes the proof.
+\end{proof}
 
 \subsubsection{Circle Averages}
 
@@ -561,7 +593,7 @@ Normalising by this factor, i.e. taking $\lambda=\gamma h_\eps - \alpha\log\eps$
 
 Intuitively a weak limit should be strong enough to preserve information about area since (at least for probability measures) we have $\mu_n\rightarrow\mu$ weakly implies that $\mu_n(B)\rightarrow\mu(B)$ for all $B$ in the Borel-$\sigma$ algebra with $\mu(\partial B)=0$.
 
-\begin{thm}[Weak Limit of $\eps^{\gamma^2/2}e^{\gamma h_\eps}$]
+\begin{thm}[Weak Limit of $\eps^{\gamma^2/2}e^{\gamma h_\eps}$]\label{thm:weaklimitofmueps}
 	Let $h$ be a Gaussian free field in some bounded domain $D\subseteq\mathbb C$, $\gamma \in [0,2)$ fixed, and $\mu_\eps\deq\eps^{\gamma^2/2}e^{\gamma h_\eps(z)}dz = e^{\overline h_\eps(z)}dz$. Then $\mu_\eps$ converges weakly almost surely against some $\mu=\mu_h$ for $\eps=2^{-k}\rightarrow 0$ as $k\rightarrow \infty$.
 \end{thm}
 \begin{proof}
@@ -630,74 +662,225 @@ Intuitively a weak limit should be strong enough to preserve information about a
 \end{proof}
 
 \subsection{Parameterizing a Surface with Different Domains}
-for some calculations we would like to parameterize the same surface with a different domain $\tilde D$. we do that using the following formula:\todo{write proper motivation, should involve the connection to SLEs somehow}
-
-\begin{pro}[Change of Coordinates]
+We will start by stating the main result of this subsection (mainly to introduce notation), then state some immediate applications, and conclude by proving some other results needed to show it.
+\begin{pro}[Change of Coordinates]\label{prop:changeofcoordinates}
 	Let $h$ be a Gaussian free field on a domain $D$, $\psi$ a conformal map from a domain $\tilde D$ to $D$, and $\tilde h\deq h\circ\psi+Q\log|\psi'|$ a distribution on $\tilde D$, where $Q\deq \frac{2}{\gamma}+\frac{\gamma}{2}$.
 	
 	Then $$\mu_{\tilde h}=\mu_h\circ\psi,$$
 	i.e. $\mu_{\tilde h}(A)=\mu_h(\psi(A))$ for all Borel measurable $A\subseteq \tilde D$.
 \end{pro}
-\begin{rem}
+\begin{rem}[Motivation]
+	For some calculations we would like to parameterize the same surface given by the Gaussian free field on $D$ with a different domain $\tilde D$ since some quantities may be easier to calculate in one domain than in another. It also leads to a definition of a class of random surfaces henceforth referred to as quantum surfaces which will be shown to exhibit connections to SLEs later on.
+\end{rem}
+
+\begin{defi}[Quantum Surfaces]\label{def:quantumsurface}
+	A quantum surface is an equivalence class of pairs $(D,h)$ under the equivalence transformation $$(D,h)\rightarrow \psi^{-1}(D,h)\deq (\psi^{-1}(D),h\circ\psi+Q\log|\psi'|)=(\tilde D,\tilde h).$$
+\end{defi}
+
+This definition admits the following interpretation: Pick a random surface $(D,h)$ induced (or ``parameterized'') by the Gaussian free field $h$ on $D$ and let $\tilde D$ be another domain with some conformal $\psi:\tilde D\rightarrow D$. Now if we wanted to consider the same surface parameterized by $\tilde D$ instead of $D$ proposition \ref{prop:changeofcoordinates} tells us to consider $\tilde h\deq h\circ\psi + Q\log|\psi'|$, the Gaussian free field on $\tilde D$ (by conformal invariance) plus some correction term to account for the local changes of $\psi$.
+
+\begin{rem}[Preliminaries for the Proof]
 	First we recall that $(\cdot,\cdot)_\nabla$ is conformally invariant in two dimensions and that, by the Cauchy-Riemann equations, we have that the determinant of a Jacobian for a conformal coordinate change $\psi$ is given by $|\psi'|^2$.
 \end{rem}
-\begin{proof}
-	If $(f_i)_{i\in\mathbb N}$ is an orthonormal basis of $H(D)$ as in the statement of theorem \ref{thm:approximationofhwithhn}, then, by the conformal invariance of $(\cdot,\cdot)_\nabla$, we have that $(f_i\circ\psi)_{i\in\mathbb N}$ is an orthonormal basis of $H(\tilde D)$ and, by theorem \ref{thm:approximationofhwithhn}, $h^n\circ \psi \eqbydef h^0\circ\psi+\sum^n_{i=1}(h,f_i)_\nabla f_i\circ\psi = h^0\circ\psi+\sum^n_{i=1}(h,f_i\circ\psi)_\nabla f_i\circ\psi$ converges weakly to the Gaussian free field on $\tilde D$. 
+\begin{proof}[Proof of the proposition.]
+	\underline{Reduction to continuous approximations:} Since it is hard to show the desired result $\mu_h\circ\psi = \mu_{\tilde h}$ directly we will work with approximations $\mu_h^n$ to $\mu_h$ as given by theorem \ref{thm:approximationofhwithhn} (note that they are well-defined functions, as opposed to distributions) and show that $\mu_h^n\circ\psi=\mu_{\tilde h}^n$ for all $n\in\mathbb N$ and hence for their (weak) limit.
+	
+	\underline{Show it for the approximation:}
+	\begin{align*}
+		\mu_{\tilde h}^n&\eqbydef
+		\exp\left(\gamma(h^n\circ\psi+Q\log|\psi'|)-\frac{\gamma^2}{2}\text{var}(h^n\circ\psi+Q\log|\psi'|)+\frac{\gamma^2}{2}\log C(z;D) \right)\\
+		&=\exp\left(\gamma h^n\circ\psi+\frac{\gamma^2}{2}\log|\psi'|+2\log|\psi'|-\frac{\gamma^2}{2}\text{var}(h^n\circ\psi)+\frac{\gamma^2}{2}\log C(z;D) \right)\\
+		&=\exp\left(\gamma h^n\circ\psi+\frac{\gamma^2}{2}\log(|\psi'|C(z;D))-\frac{\gamma^2}{2}\text{var}(h^n\circ\psi)\right)|\psi'|^2\\
+		&=\mu_h^n\circ\psi,
+	\end{align*}
+	where the last step holds since \begin{itemize}
+		\item $|\psi'(z)|=\frac{|\psi'(z)|C(z,\tilde D)}{C(z,\tilde D)}=\frac{C(\psi(z);D)}{C(z;\tilde D)}$, so the factor $\frac{\gamma}{2}\log|\psi'|$ is here to adjust the conformal radius, and
+		\item $|\psi'(z)|^2 = |\text{det}(D\psi)(z)|$ is the factor we get when using the integration by substitution formula integrating against the Radon Nikodym derivative $\frac{d\mu^n}{dz}$ and going from $\tilde D$ to $D$ by $\psi$.
+	\end{itemize}
 \end{proof}
 
-to prove it we assumed the following theorem which is also of independent interest
+This proof relied heavily on the following theorem which is also of independent interest:
 
 \begin{thm}\label{thm:approximationofhwithhn}
-	Write $h\deq \overline h+h^0$ where $\overline h$ is the zero boundary Gaussian free field on some domain $D$ and $h^0$ is a deterministic continuous function on $D$. Let $(f_i)_{i\in\mathbb N}$ be an orthonormal basis of continuous functions for $H(D)$ and let $h^n\deq h^0+\sum_{i=1}^n (h,f_i)_\nabla f_i$. Then $\mu=\mu_h$ is almost surely the weak limit of $$\mu^n\deq exp\left(\gamma h^n(z)-\frac{\gamma^2}{2}\text{Var}h^n(z)+\frac{\gamma^2}{2}\log C(z;D) \right)dz$$
+	Write $h\deq \overline h+h^0$ where $\overline h$ is the zero boundary Gaussian free field on some domain $D$ and $h^0$ is a deterministic continuous function on $D$. Let $(f_i)_{i\in\mathbb N}$ be an orthonormal basis of continuous functions for $H(D)$ and let $h^n\deq h^0+\sum_{i=1}^n (h,f_i)_\nabla f_i$. Then $\mu=\mu_h$ is almost surely the weak limit of $$\mu_h^n=\mu^n\deq exp\left(\gamma h^n(z)-\frac{\gamma^2}{2}\text{Var}h^n(z)+\frac{\gamma^2}{2}\log C(z;D) \right)dz$$
 	as $n\rightarrow\infty$.
 	
 	Furthermore, for each measurable $A\subseteq D$ and for each $n\geq 0$ we have $$\mathbb E[\mu(A)|h^n]=\mu^n(A).$$
 \end{thm}
 
-before we get to the proof we define rooted random measures and record some of their properties which will be used in the ensuing proof
+Before we get to the proof of this theorem we define rooted random measures and record some of their properties which will be used later on.
 
 \begin{defi}[Rooted Random Measures]
-	
+	Let $\Theta_\eps\deq Z^{-1}_\eps e^{\gamma h_\eps(z)}dzdh$, where $Z^{-1}_\eps$ is some normalising constant chosen such that $\Theta_\eps$ is a probability measure and $dh$ is the law of $h$.
 \end{defi}
 \begin{rem}[$\Theta_\eps$ is well-defined]
-	as radon nikodym derivative of dzdh
+	By the Radon-Nikodym theorem $\Theta_\eps$ is well defined since the Radon-Nikodym derivative of $\theta_\eps$ with respect to $dzdh$ is $Z^{-1}_\eps e^{\gamma h_\eps(z)}$, a non-negative continuous (hence measurable) function on a measurable space $H\times D$ endowed with the product $\sigma$-algebra of their two respective $\sigma$-algebras and $dzdh$ and $\theta_\eps$ are both $\sigma$-finite measures.
 \end{rem}
 
 \begin{rem}[Marginal Laws and Conditional Distributions]
-	
+	\todo{do I really want to do the proof of this theorem? if not this section is for nothing}
 \end{rem}
 
-\begin{proof}[Proof of theorem above]
+\begin{proof}[Proof of the theorem.]
 	
 \end{proof}
 
 \section{Connection to SLEs}
-another way to sample a GFF is by first sampling a BM (which determines an SLE) and then setting $\tilde h\deq ZEUG(f_T+arg+...)$.
+Before we state the main result of this section we first have to fix notation and introduce some new objects we will be working with.
+\subsection{Preliminaries}
 
-\begin{rem}[Geometric Intuition]
+\subsubsection{SLEs}
+Naturally the object of central interest in this section is the SLE. In this subsection we shall merely fix notation.
+
+\begin{defi}[Chordal $\text{SLE}_\kappa$ in $\mathbb H$ from $0$ to $\infty$]
+	It is well known that for each $\kappa\geq 0$ and instance of a Brownian motion $B=(B_t)_{t\geq 0}$ there is almost surely a unique continuous curve $\eta$ in $\mathbb H$ from $0$ to $\infty$ (parameterized by $[0,\infty)$) for which
+	\begin{equation}\label{eq:LoewnerFlow}
+		dg_t(z)=\frac{2}{g_t(z)-\sqrt\kappa B_t}dt,
+	\end{equation}
+where $g_t:\mathbb H\setminus\eta([0,t])\rightarrow\mathbb H$ are the unique conformal maps satisfying the normalisation $\lim_{z\rightarrow\infty}|g_t(z)-z|=0$.
+
+Equation \eqref{eq:LoewnerFlow} is usually called the Loewner flow.
+
+The resulting (random) object $\eta$ is said to be an instance of chordal $\text{SLE}_\kappa$ in $\mathbb H$ from $0$ to $\infty$ with half-plane capacity $t$.
+
+We also set $\eta_T\deq\eta([0,T])$ and denote by $K_T$ the complement of the unbounded component of $\mathbb H\setminus\eta_T$.
+\end{defi}
+$\text{SLE}_\kappa$ is known to exhibit different behaviour for different choices of $\kappa$ which is stated in the following proposition:
+\begin{pro}[Properties of $\text{SLE}_\kappa$] We distinguish between the following cases:
+	\begin{itemize}
+		\item $\kappa\in[0,4]$: $\text{SLE}_\kappa$ is almost surely a simple curve.
+		\item $\kappa\in(4,8)$: $\text{SLE}_\kappa$ is almost surely a self-intersecting, but non-space-filling curve.
+		\item $\kappa\geq 8$: $\text{SLE}_\kappa$ is almost surely a space-filling curve.
+	\end{itemize}
+\end{pro}
+So for $\kappa\leq 4$ we get that $K_T=\eta_T$ almost surely.
+
+In what follows we will mainly deal with the denominator in\eqref{eq:LoewnerFlow} which we will henceforth refer to as $$f_t(z)\deq g_t(z)-\sqrt{\kappa}B_t,$$ satisfying $$df_t(z)=\frac{2}{f_t(z)}dt-\sqrt\kappa dB_t,$$ and $f_t(\eta(t))=0$.
+
+
+\subsubsection{Free Boundary GFF}
+\todo{add properties as they are needed in the proof (p37ff)}
+% remark about how the +QlogBLA corresponds to recentering free boundary GFFs
+
+\subsection{Sampling Quantum Surfaces with SLEs}
+The next theorem provides another way of sampling a quantum surface $(\mathbb H,h)$ as defined in \ref{def:quantumsurface}, where $h\deq \tilde h+\frac{2}{\sqrt\kappa}\log|\cdot|$ and $\tilde h$ is a free GFF on $\mathbb H$. Informally it may be rephrased as:
+The law of the quantum surface $(\mathbb H,h)$ is invariant under the following operation:
+\begin{enumerate}
+	\item sample a Brownian motion $(B_t)_{t\in[0,T]}$ inducing $f_T$ (indepedently of $h$)
+	\item cut out $K_T$
+	\item use $f_T^{-1}:\mathbb H\setminus K_T\rightarrow\mathbb H$ in the place of $\psi$ in definition \ref{def:quantumsurface} to get \begin{align*}
+			f_T^{-1}(\mathbb H\setminus K_T, h)&\eqbydef (f_T^{-1}(\mathbb H\setminus K_T),h\circ f_T+Q\log|f'_T|))\\ &= (\mathbb H,h\circ f_T+Q\log|f'_T|))
+		\end{align*}
+\end{enumerate}
+Note that the definition of a quantum surface gives us that even for deterministic $\psi$ we have that the induced surfaces are invariant under the $\psi^{-1}$ operation as in the third step above. The non-trivial part is that we can neglect the information in $K_T$ but ``regain'' it (in law) by the randomness of $K_T$. This cannot be possible for any deterministic $\psi$.
+
+%\begin{rem}[Geometric Intuition]
+%\end{rem}
+
+% see that a GFF $h$ (as a (dual) GP) is characterised by its finite dimensional distributions since $(\eps,z)\mapsto h_\eps(z)$ is H\"older of BLA: <-- this is only needed to see that $h$ as a distribution uniquely determines the LQG measures $\mu_h$
+
+%\begin{thm}[Continuity of $h_\eps(z)$]
 	
-\end{rem}
-
-see that a GFF $h$ (as a (dual) GP) is characterised by its finite dimensional distributions since $(\eps,z)\mapsto h_\eps(z)$ is H\"older of BLA:
-
-\begin{thm}[Continuity of $h_\eps(z)$]
+%\end{thm}
+%\begin{proof}
 	
-\end{thm}
-\begin{proof}
-	
-\end{proof}
+%\end{proof}
 
-we will now show the theorem by showing that the finite dimensional distributions coincide
+%we will now show the theorem by showing that the finite dimensional distributions coincide
+
+While the following theorem can be shown for general $\kappa>0$ we will restrict ourselves to $\kappa\leq 4$ to avoid technical difficulties introduced by $K_T$ not being a curve anymore.
 
 \begin{thm}
-	
+	Fix $\kappa\in (0,4]$ and let $\eta_T$ be the segment of $\text{SLE}_\kappa$ generated by a reverse Loewner flow $$df_t(z)=-\frac{2}{f_t(z)}dt-\sqrt\kappa dB_t, \;\;\;\; f_0(z)=z$$
+	up to a fixed time $T>0$. Furthermore let \begin{itemize}
+		\item $Q\deq\frac{2}{\sqrt\kappa}+\frac{\sqrt\kappa}{2}$ (as in proposition \ref{prop:changeofcoordinates} with $\gamma=\sqrt\kappa$),
+		\item $\fh_0(z)\deq\frac{2}{\sqrt\kappa}\log|z|$,
+		\item $\fh_t(z)\deq\fh_0(f_t(z))+Q\log|f'_t(z)|$,
+		\item $\tilde h$ an instance of the free boundary Gaussian free field on $\mathbb H$, independent of $B=(B_t)_{t\geq 0}$.
+	\end{itemize}
+	Then the following two random distributions (modulo additive constants since $\tilde h$ is a \emph{free boundary} GFF) on $\mathbb H$ agree in law:
+	\begin{align*}
+		h&\deq \fh_0+\tilde h\\
+		h\circ f_T+Q\log|f'_T|&\eqbydef\fh_T+\tilde h\circ f_T
+	\end{align*}
 \end{thm}
+\begin{rem}
+	First, we notice that the statement is that $h$ and $h\circ f_T+Q\log|f'_T|$ agree as distributions on $\mathbb H$. This is a non-trivial statement for two reasons:
+	\begin{enumerate}
+		\item Our definition of a Gaussian free field is not a random distribution, but a Gaussian process indexed by $H(D)$. However, as stated (without proof) in remark \ref{rem:spaceofX}, it turns out that the GFF (as a random distribution) is sufficiently nice to have a unique extension to the larger space of (non-continuous) functionals on $H(D)$, which is compatible with our definition of the GFF. Henceforth we shall use the definition of a GFF as random distribution, knowing that it can be shown to be equivalent to ours.
+		\item By the conformal invariance of the GFF $h\circ f_T$ is a GFF on $\mathbb H\setminus K_T$, so a priori it is not a distribution on $\mathbb H$. \todo{how is this well-defined for a free boundary GFF? (in particular in the case kappa bigger than 4)}
+	\end{enumerate}
+\end{rem}
 \begin{proof}
+	Two deterministic distributions on $D$ are equal if their evaluations at every $\rho\in H_s(D)$ coincide. To show that the two random distributions $h\eqbydef \fh_0+\tilde h$ and $\fh_T+\tilde h\circ f_T$ are equal in distribution we will thus show that \begin{equation}\label{eq:equalityneededformainresultofSLEconnection}
+			(\fh_0,\rho)+(\tilde h,\rho)\eqby{d}(\fh_T,\rho)+(\tilde h\circ f_T,\rho).
+		\end{equation}
+	
+	Let $G_T$ be the Green's function of $\mathbb H\setminus K_T$ and $E_T\deq\int \rho(x)G_T(x,y)\rho(y)dxdy$, then we have that
+	\begin{itemize}
+		\item $(\fh_0,\rho)$ is deterministic.
+		\item $(\tilde h,\rho)\sim\mathcal N(0,E_0)$.
+		\item $(\tilde h\circ f_T,\rho)\sim\mathcal N(0,E_T)$ and it is independent of $(\fh_T,\rho)$ since $\tilde h$ was chosen independently of the Brownian motion inducing $f_T$.
+	\end{itemize}
+	Now assume we had shown that $X_T\deq(\fh_T,\rho)$ was a continuous local martingale with quadratic variation $[X]_T=E_0-E_T$. Then, by Dubins-Schwarz we would have that the recentered process $M_T\deq(\fh_T,\rho)-(\fh_0,\rho)$ (chosen such that $M_0=0$) satisfies $M_t=\tilde B_{E_0-E_T}$, where $\tilde B$ is a Brownian motion, or equivalently: $(\fh_T,\rho)\sim\mathcal N((\fh_0,\rho),E_0-E_T)$.
+	
+	As a result we could rewrite \eqref{eq:equalityneededformainresultofSLEconnection} as $$\mathcal N((\fh_0,\rho),E_0)\eqby{d}\mathcal N((\fh_0,\rho),E_0-E_T)+\mathcal N(0,E_T),$$
+	keeping in mind that the two normals on the r.h.s. are independent so that their variances add up and we would get the desired result.
+	
+	Hence it suffices to prove the assumption that $(\fh_T,\rho)$ is a continuous local martingale with quadratic variation $E_0-E_T$. The strategy will be as follows:
+	\begin{enumerate}
+		\item Calculate $d\fh_T(z)$ to see that it is a continuous, local martingale.\footnote{At this point we might already expect that $(\fh_T,\rho)$, as a ``sufficiently nice'' linear combination, is one as well.}
+		\item Show that $\fh_t(z)$ is actually a continuous (proper) martingale so that, by Doob, we can find that it is a well-defined distribution.
+		\item This enables us to show that $\fh_t(z)\in L^p_\text{loc}$ and hence $(\fh_t(z),\rho)$ is continuous in $t$.
+		\item Then we calculate $d[\fh_t(z),\fh_t(y)]$ and $d[(\fh_t(z),\rho),(\fh_t(z),\rho)]$ by applying the stochastic Fubini theorem - this implies that it is a (continuous) local martingale with the right quadratic variation.
+	\end{enumerate}
 	
 \end{proof}
+
+\section{Connection to the KPZ formula}
+
+Since the proofs of the following statements are beyond the scope of a part III essay we will restrict ourselves to stating the very basic definitions and theorems to give an idea how the KPZ formula translates expected fractal dimensions of random subsets of the plane to fractal dimensions in terms of Liouville quantum gravity.
+
+To define fractal dimensions with respect to a general measure $\mu$ we first have to define a ball with respect to $\mu$:
+\begin{defi}[Isothermal Quantum Ball]
+	For some fixed measure $\mu$ on the domain $D$ (henceforth this will be referred to as \emph{quantum measure}) let $B^\delta(z)\deq B_\eps(z)$, the Euclidean ball centered at $z\in D$ with radius $\eps\deq\sup\{\eps':\mu(B_{\eps'}(z)\leq\delta)\}$. Then $B^\delta(z)$ is called the \emph{isothermal quantum ball} of area $\delta$ centered at $z$.
+\end{defi}
+\begin{rem}
+	In the above definition we would like to pick the Euclidean ball whose radius $\eps$ is chosen such that $\mu(B_\eps(z))=\delta$, but in general such a delta does not need to exist, which is the reason for the less intuitive definition with the supremum.
+\end{rem}
+\begin{rem}
+	Note that if $\gamma=0$ then $\mu$ as in theorem \ref{thm:weaklimitofmueps} (the limit of $\mu_\eps\deq e^{\gamma\overline h_\eps}dz$) is just the Lebesgue measure and $\delta=\pi\eps^2$.
+\end{rem}
+Recall the definition of the $\eps$-neighbourhood of $X\subseteq D$ by $$B_\eps(X)\deq \{z:B_\eps(z)\cap X\neq\emptyset \}$$ which serves as a motivation for the following definition:
+\begin{defi}[Isothermal Quantum $\delta$ Neighbourhood of $X$]
+	$$B^\delta(X)\deq \{z:B^\delta(z)\cap X\neq\emptyset\}$$
+\end{defi}
+
+Fix $\gamma\in[0,2)$. We also recall that a random subset $X\subseteq D$ is said to have (Euclidean expectation) dimension $2(1-x)$, where $x$ is called the Euclidean scaling exponent, if the expected area of $B_\eps(X)$ decays like $(\eps^2)^x$. (Note that $D\subseteq\mathbb C\simeq\mathbb R^2$.) More precisely, $$x\deq \lim_{\eps\rightarrow 0}\frac{\log \mathbb E\mu_0(B_\eps(X))}{\log\eps^2},$$ where $\mu_0$ denotes the Lebesgue measure on $D$ and the expectation is taken over $X$.
+\begin{rem}[Examples]
+	Some easy examples for deterministic $X$ to illuminate the definition:
+	\begin{itemize}
+		\item $X=\{0\}$. We expect $x$ to be one since the dimension of a point is $0 = 2(1-1)$. Indeed we have $\mu_0(B_\eps(0))=\pi\eps^2$ so that $\frac{\log\eps^2+\log\pi}{\log\eps^2}\rightarrow 1=:x$.
+		\item $X=[0,1]$. We expect $x$ to be $\frac{1}{2}$ since the dimension of a line is $1=2(1-\frac{1}{2})$. Indeed we have $\mu_0(B_\eps([0,1]))=O(\eps)$ so that $\frac{\log\eps+c}{\log\eps^2}\rightarrow 1/2=:x$.
+	\end{itemize}
+\end{rem}
+
+This, in turn, motivates the definition of its ``quantum'' analogue:
+\begin{defi}[Quantum Scaling Exponent]
+	We say a random $X\subseteq D$ has quantum scaling exponent $\Delta$ if $$\lim_{\delta\rightarrow 0}\frac{\log\mathbb E\mu(B^\delta(X))}{\log\delta}=\Delta,$$
+	where the expectation $\mathbb E$ is with respect to both $X$ and $\mu$ which are chosen independently.
+\end{defi}
+
+Now we can state (without proof) one of the central results of \cite{Dup10}:
+
+\begin{thm}
+	Fix $\gamma\in[0,2)$ and a compact subset $\tilde D\subseteq D$ of some domain $D$. If a random $X\cap\tilde D$ has Euclidean expected scaling exponent $x\geq 0$ then it has quantum scaling exponent $\Delta$, where $\Delta$ is the non-negative solution to $$x=\frac{\gamma^2}{4}\Delta^2+\left(1-\frac{\gamma^2}{4}\right)\Delta.$$
+\end{thm}
+
 
 \begin{thebibliography}{00}
 \bibitem{She07} S. Sheffield: \emph{Gaussian free fields for mathematicians}, Arxiv: 0312099
+\bibitem{Dup10} B. Duplantier and S. Sheffield: \emph{Liouville Quantum Gravity and KPZ}, Arxiv: 0808.1560v2
 %\bibitem{HK14} L. Holst, T. Konstantopoulos: \emph{Runs in coin tossing: a general approach for deriving distributions for functionals}, Arxiv: 1407.6831
 %\bibitem{AGZ10} G. Anderson, A. Guionnet, O. Zeitouni: \emph{An Introduction to Random Matrices}, Cambridge University Press, 2010
 \end{thebibliography}
