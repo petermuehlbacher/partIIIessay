@@ -279,10 +279,15 @@
 	\item For a topological space $S$ denote its Borel-$\sigma$-algebra by $\mathcal B_S$.
 	\item For a topological vector space $V$ write $V^*$ for its topological/continuous dual space, i.e. the set of all continuous, linear functionals $f:V\rightarrow\mathbb R$.
 	\item Unless stated otherwise the probability spaces we are working with will implicitly assumed to be $(\Omega,\mathcal A,\mathbb P)$ and $(H,\mathcal A, \mathbb P)$ for the Gaussian free field $h$.
-	\item $(f,g)$ for the $L^2$ inner product $\int_D f(x)g(x)dx$ on some space $D$ which is usually clear from context; by abuse of notation (justified by Riesz) we will also write use this notation for more general objects like distributions/linear functionals that are not in $L^2$.
-	\todo{that's kinda the wrong way round, actually we can define the standard inner product by integration by parts and the inverse Laplacian}
-	\item $(f,g)_\nabla$ for the Dirichlet inner product $(\nabla f,\nabla g)$; again, by abuse of notation (justified by integration by parts), we will use it also for more general elements $f,g$ for which $(f,g)_\nabla = -(f,\Delta g)$ is well-defined.
-	\item Write $H(D)$ (or often just $H$ and $H^1(D)$ to highlight it is a Sobolev space) for the Hilbert space completion of $H_s(D)$, the space of smooth functions, compactly supported in $D$, with respect to $(\cdot,\cdot)_\nabla$.
+	\item Unless stated otherwise $D$ is a fixed connected planar domain $D\subseteq\mathbb C$ with $D\neq\mathbb C$. Let $H_s=H_s(D)$ be the set of smooth, compactly supported functions on $D$, and let $H(D)=H^1(D)$ (if clear from context we drop the $D$) its Hilbert space closure under the Dirichlet inner product $(f,g)_\nabla=(f,g)_H\deq (\nabla f,\nabla g)$, where $$(f,g)\deq\int_D f(z)g(z)dz$$ is the $L^2$ inner product.
+	\item By abuse of notation (motivated by Riesz) we view $(f,g)$ as being well-defined not only for $f,g\in L^2$, but also for functionals $f$ acting on the space $g$ is in or, in the case that $g$ is some measure, the integral of $f$ against that measure.
+	\item We also write $\|f\|^2\deq (f,f)$ and $\|f\|^2_\nabla\deq (f,f)_\nabla$.
+%	\item $(f,g)$ for the $L^2$ inner product $\int_D f(x)g(x)dx$ on some space $D$ which is usually clear from context; by abuse of notation (justified by Riesz) we will also write use this notation for more general objects like distributions/linear functionals that are not in $L^2$.
+%	\todo{that's kinda the wrong way round, actually we can define the standard inner product by integration by parts and the inverse Laplacian}
+%	\item $(f,g)_\nabla$ for the Dirichlet inner product $(\nabla f,\nabla g)$; again, by abuse of notation (justified by integration by parts), we will use it also for more general elements $f,g$ for which $(f,g)_\nabla = -(f,\Delta g)$ is well-defined.
+%	\item Write $H(D)$ (or often just $H$ and $H^1(D)$ to highlight it is a Sobolev space) for the Hilbert space completion of $H_s(D)$, the space of smooth functions, compactly supported in $D$, with respect to $(\cdot,\cdot)_\nabla$.
+	\item Write $\eqby{d}$ for equality in distribution.
+	\item Write $\mathcal M_\text{loc}\subseteq\mathcal M_{c,\text{loc}}\subseteq\mathcal M_c\subseteq\mathcal M$ for the sets of local, continuous local, continuous, and proper martingales.
 \end{itemize}
 
 \section{Gaussian Free Field}
@@ -309,7 +314,7 @@ Given that we did not impose any conditions on $T$ it is natural to ask for cond
 	\end{itemize}
 \end{lem}
 
-\todo{check if Kolmogorov's consistency theorem gives the kind of uniqueness we want for the proof in the SLE part}
+%\todo{check if Kolmogorov's consistency theorem gives the kind of uniqueness we want for the proof in the SLE part}
 %\begin{rem}[Uniqueness]
 %	Realising $X$
 %\end{rem}
@@ -620,7 +625,7 @@ Intuitively a weak limit should be strong enough to preserve information about a
 	
 	Writing $X_k\deq \mu_{2^{-k}}(S)$, a real valued random variable, the exponential decay implies that $(X_k)_k$ is a Cauchy sequence in $L^1(\mathbb P)$, but the $L^1$ is complete and hence the limit $X=\mu(S)$ is in $L^1$ again. Since its expectation is finite it implies that $\mu(S)<\infty$ with probability one.
 	
-	\underline{Strategy to prove exponential decay:} \todo{choose better title for this subsection}\todo{where does it help to take the second moment instead of showing it directly for the first?}To show that $\mathbb E|\mu_{2^{-(k+1)}}(S)-\mu_{2^{-k}}(S)|$ decays exponentially in $k$ we assume without loss of generality\footnote{Otherwise we would have to keep writing an additional factor given by the (Lebesgue) area of $S$.} that $S=[0,1]^2$, so that $\mu_\eps(S)$ is just the mean value of $e^{\overline h_\eps}$ on $S$ and calculate $\mathbb E(|\mu_{2^{-(k+1)}}(S)-\mu_{2^{-k}}(S)|^2)$ (note that showing exponential decay of the second moment is enough since the first moment $\mathbb Ee^{\overline h_\eps(z)}=C(z;D)^{\gamma^2/2}$ is positive and bounded from below and above uniformly in $z\in S$ since we assumed that $S$ is compact in $D$ open and the conformal radius can be bounded from below and above by $\text{dist}(z,\partial D)$):
+	\underline{Strategy to prove exponential decay:} To show that $\mathbb E|\mu_{2^{-(k+1)}}(S)-\mu_{2^{-k}}(S)|$ decays exponentially in $k$ we assume without loss of generality\footnote{Otherwise we would have to keep writing an additional factor given by the (Lebesgue) area of $S$.} that $S=[0,1]^2$, so that $\mu_\eps(S)$ is just the mean value of $e^{\overline h_\eps}$ on $S$ and calculate $\mathbb E(|\mu_{2^{-(k+1)}}(S)-\mu_{2^{-k}}(S)|^2)$ (note that showing exponential decay of the second moment is enough since the first moment $\mathbb Ee^{\overline h_\eps(z)}=C(z;D)^{\gamma^2/2}$ is positive and bounded from below and above uniformly in $z\in S$ since we assumed that $S$ is compact in $D$ open and the conformal radius can be bounded from below and above by $\text{dist}(z,\partial D)$):
 	
 	We would like to formalize the intuition that, by the Markov property, $h_\eps(z)$ and $h_\eps(z')$, conditioned on $h_{2\eps}(z)$ and $h_{2\eps}(z')$ respectively, are independent (for $\eps$ small enough) which should make calculations easier. In the following we will take the average values of $\overline h_{2^{-(k+1)}}$ and $\overline h_{2^{-(k+2)}}$, conditioned on $\overline h_{2^{-(k+1)}}$, over some lattice chosen $S_k^y$ such that all those values are independent. Then we will average over all those lattices $(S_k^y)_{y\in S}$ and take another expectation to get rid of the conditioning.
 	
@@ -759,8 +764,13 @@ In what follows we will mainly deal with the denominator in\eqref{eq:LoewnerFlow
 
 
 \subsubsection{Free Boundary GFF}
-\todo{add properties as they are needed in the proof (p37ff)}
-% remark about how the +QlogBLA corresponds to recentering free boundary GFFs
+While there is a lot to say about the free boundary GFF, we will restrict ourselves to the bare minimum needed in the following proof, focusing primarily on what is different to the zero boundary GFF we introduced in the beginning.
+
+The free boundary Gaussian free field is defined just like the zero boundary GFF, except that we do not take the Hilbert space closure of $H_s(D)$ with respect to $(\cdot,\cdot)_\nabla$, but rather the one of $\{f:\nabla f\in L^2,\int_D f=0\}$ with respect to the same inner product $(\cdot,\cdot)_\nabla$, which induces a norm on this space since the additive constant that is ``not seen'' by the Dirichlet inner product is fixed by the requirement of having mean zero.
+
+We define the Green's function just as before, but without the harmonic correction term. So the free boundary Green's function of $\mathbb H$ will be $-\log|x-y|-\log|x-\overline y|$ (by a reflection argument).
+
+Again, similarly to before, we can thus define $(h,\rho)$ by integration by parts and the inverse Laplacian given by integrating against the Green's function. However, one needs to be careful since integration by parts relied on the compact support in order not to introduce any correction terms. For $g=-\Delta^{-1}\rho$ it is easy to see that $(f,-\Delta^{-1}\rho)_\nabla=(f,\rho)$ (and hence well defined for a any fixed $f$) if and only if $\int_{\partial D}f\nabla g=0$, where $\partial D$ is to be interpreted by viewing $\mathbb C$ as a Riemann sphere. For example, in the case of $D=\mathbb C$ we have that $\int_{\partial D}f\nabla g=0$ is equivalent to $\lim_{z\rightarrow\infty}\nabla g(z)=0$, i.e. the gradient of $g$ has no point mass at infinity.
 
 \subsection{Sampling Quantum Surfaces with SLEs}
 The next theorem provides another way of sampling a quantum surface $(\mathbb H,h)$ as defined in \ref{def:quantumsurface}, where $h\deq \tilde h+\frac{2}{\sqrt\kappa}\log|\cdot|$ and $\tilde h$ is a free GFF on $\mathbb H$. Informally it may be rephrased as:
@@ -791,7 +801,9 @@ Note that the definition of a quantum surface gives us that even for determinist
 While the following theorem can be shown for general $\kappa>0$ we will restrict ourselves to $\kappa\leq 4$ to avoid technical difficulties introduced by $K_T$ not being a curve anymore.
 
 \begin{thm}
-	Fix $\kappa\in (0,4]$ and let $\eta_T$ be the segment of $\text{SLE}_\kappa$ generated by a reverse Loewner flow $$df_t(z)=-\frac{2}{f_t(z)}dt-\sqrt\kappa dB_t, \;\;\;\; f_0(z)=z$$
+	Fix $\kappa\in (0,4]$ and let $\eta_T$ be the segment of $\text{SLE}_\kappa$ generated by a reverse Loewner flow \begin{equation}\label{eq:defOfLoewnerFlow}
+		df_t(z)=-\frac{2}{f_t(z)}dt-\sqrt\kappa dB_t, \;\;\;\; f_0(z)=z
+	\end{equation}
 	up to a fixed time $T>0$. Furthermore let \begin{itemize}
 		\item $Q\deq\frac{2}{\sqrt\kappa}+\frac{\sqrt\kappa}{2}$ (as in proposition \ref{prop:changeofcoordinates} with $\gamma=\sqrt\kappa$),
 		\item $\fh_0(z)\deq\frac{2}{\sqrt\kappa}\log|z|$,
@@ -800,15 +812,17 @@ While the following theorem can be shown for general $\kappa>0$ we will restrict
 	\end{itemize}
 	Then the following two random distributions (modulo additive constants since $\tilde h$ is a \emph{free boundary} GFF) on $\mathbb H$ agree in law:
 	\begin{align*}
-		h&\deq \fh_0+\tilde h\\
-		h\circ f_T+Q\log|f'_T|&\eqbydef\fh_T+\tilde h\circ f_T
+		h&\deq \fh_0+\tilde h,\\
+		h\circ f_T+Q\log|f'_T|&\eqbydef\fh_T+\tilde h\circ f_T,
 	\end{align*}
+	where $f'_t$ refers to the spatial derivative of $f_t(\cdot)$.
 \end{thm}
+A similar result holds for the forward SLE (see \cite{She15}, theorem 1.1) and can be proved almost analogously. However, it would require introducing a notion of level lines for (sufficiently well-behaved) distributions from which we will refrain here.
 \begin{rem}
 	First, we notice that the statement is that $h$ and $h\circ f_T+Q\log|f'_T|$ agree as distributions on $\mathbb H$. This is a non-trivial statement for two reasons:
 	\begin{enumerate}
 		\item Our definition of a Gaussian free field is not a random distribution, but a Gaussian process indexed by $H(D)$. However, as stated (without proof) in remark \ref{rem:spaceofX}, it turns out that the GFF (as a random distribution) is sufficiently nice to have a unique extension to the larger space of (non-continuous) functionals on $H(D)$, which is compatible with our definition of the GFF. Henceforth we shall use the definition of a GFF as random distribution, knowing that it can be shown to be equivalent to ours.
-		\item By the conformal invariance of the GFF $h\circ f_T$ is a GFF on $\mathbb H\setminus K_T$, so a priori it is not a distribution on $\mathbb H$. \todo{how is this well-defined for a free boundary GFF? (in particular in the case kappa bigger than 4)}
+		\item By the conformal invariance of the GFF $h\circ f_T$ is a GFF on $\mathbb H\setminus K_T$, so a priori it is not a distribution on $\mathbb H$. \todo{how is this well-defined for a free boundary GFF? (in particular in the case kappa bigger than 4) do we just set it to zero in Kt}
 	\end{enumerate}
 \end{rem}
 \begin{proof}
@@ -822,19 +836,62 @@ While the following theorem can be shown for general $\kappa>0$ we will restrict
 		\item $(\tilde h,\rho)\sim\mathcal N(0,E_0)$.
 		\item $(\tilde h\circ f_T,\rho)\sim\mathcal N(0,E_T)$ and it is independent of $(\fh_T,\rho)$ since $\tilde h$ was chosen independently of the Brownian motion inducing $f_T$.
 	\end{itemize}
-	Now assume we had shown that $X_T\deq(\fh_T,\rho)$ was a continuous local martingale with quadratic variation $[X]_T=E_0-E_T$. Then, by Dubins-Schwarz we would have that the recentered process $M_T\deq(\fh_T,\rho)-(\fh_0,\rho)$ (chosen such that $M_0=0$) satisfies $M_t=\tilde B_{E_0-E_T}$, where $\tilde B$ is a Brownian motion, or equivalently: $(\fh_T,\rho)\sim\mathcal N((\fh_0,\rho),E_0-E_T)$.
+	Now assume we had shown that $X_T\deq(\fh_T,\rho)$ was a continuous local martingale with quadratic variation $[X]_T=E_0-E_T$. Then, by Dubins-Schwarz we would have that the recentered process $M_T\deq(\fh_T,\rho)-(\fh_0,\rho)$ (chosen such that $M_0=0$) satisfies $M_t=\tilde B_{E_0-E_T}$, where $\tilde B$ is a Brownian motion, so in particular: $(\fh_T,\rho)\sim\mathcal N((\fh_0,\rho),E_0-E_T)$.
 	
 	As a result we could rewrite \eqref{eq:equalityneededformainresultofSLEconnection} as $$\mathcal N((\fh_0,\rho),E_0)\eqby{d}\mathcal N((\fh_0,\rho),E_0-E_T)+\mathcal N(0,E_T),$$
 	keeping in mind that the two normals on the r.h.s. are independent so that their variances add up and we would get the desired result.
 	
 	Hence it suffices to prove the assumption that $(\fh_T,\rho)$ is a continuous local martingale with quadratic variation $E_0-E_T$. The strategy will be as follows:
 	\begin{enumerate}
-		\item Calculate $d\fh_T(z)$ to see that it is a continuous, local martingale.\footnote{At this point we might already expect that $(\fh_T,\rho)$, as a ``sufficiently nice'' linear combination, is one as well.}
-		\item Show that $\fh_t(z)$ is actually a continuous (proper) martingale so that, by Doob, we can find that it is a well-defined distribution.
-		\item This enables us to show that $\fh_t(z)\in L^p_\text{loc}$ and hence $(\fh_t(z),\rho)$ is continuous in $t$.
-		\item Then we calculate $d[\fh_t(z),\fh_t(y)]$ and $d[(\fh_t(z),\rho),(\fh_t(z),\rho)]$ by applying the stochastic Fubini theorem - this implies that it is a (continuous) local martingale with the right quadratic variation.
+		\item Calculate $d\fh_T(z)$ to see that it is a continuous, local martingale.\footnote{At this point we might already expect that $(\fh_T,\rho)$, as a ``sufficiently nice'' linear combination of local martingales, is a local martingale as well.}
+		\item Calculate (the derivative of) the covariation $[\fh_t(y),\fh_t(z)]$ so that we can later use Fubini to get the quadratic variation $[(\fh_t,\rho),(\fh_t,\rho)]$.
+		\item Show that $\fh_t(z)$ is actually a proper martingale for some technical reasons (like being able to apply Doob's inequality).
+		\item Show that $\fh_t(z)$ is almost surely continuous and that $(\fh_t,\rho)$ is a continuous martingale so that both can be seen as a randomly stopped Brownian motion.
+		\item Then we calculate $d[\fh_t(z),\fh_t(y)]$ and $d[(\fh_t(z),\rho),(\fh_t(z),\rho)]$.
 	\end{enumerate}
 	
+	\underline{Calculating $d\fh_t(z)$:} It will be helpful to view $\fh_t(z)$ as the real part of some function $\fh_t^*(z)\deq \frac{2}{\sqrt\kappa}\log f_t(z)+Q\log f_t'(z)$ and calculating its derivative instead. To do that we will use linearity of $d$ and calculate one term at a time. Starting with $d\log f_t(z)$ we get by Ito's formula (writing $f_t$ instead of $f_t(z)$ for the sake of brevity):
+	\begin{align*}
+		d\log f_t &=\frac{1}{f_t}df_t+\frac{1}{2}\left(-\frac{1}{f_t^2}\right)df_tdf_t\\
+		&=-\frac{2}{f_t^2}dt-\frac{\sqrt\kappa}{f_t}dB_t-\frac{1}{2f_t^2}\left(\frac{2}{f_t}dt+\sqrt\kappa dB_t\right)^2\\
+		&=-\frac{4+\kappa}{2f_t^2}dt-\frac{\sqrt\kappa}{f_t}dB_t,
+	\end{align*}
+	where we used that $df_t=-\frac{2}{f_t(z)}dt-\sqrt\kappa dB_t$ (by its definition in \eqref{eq:defOfLoewnerFlow}), that the quadratic variation of $dt$ with any semimartingale vanishes, and that $d[B_t,B_t]=dt$.
+	Now an elementary calculation gives that $df'_t=\frac{2f_t'}{f_t^2}dt$ and hence (again by Ito's formula):
+	$$d\log f_t'=\frac{1}{f_t'}df_t'+0=\frac{2}{f_t^2}dt.$$
+	Putting it all together we get that the derivative of $\fh_t(z)\eqbydef\Re\fh_t^*(z)$ is given by 
+	\begin{align*}
+		d\fh_t(z)&=\Re\left(\frac{2}{\sqrt\kappa}d\log f_t+Qd\log f_t' \right)\\
+		&=\Re\left(-\frac{4+\kappa}{\sqrt\kappa f_t^2}dt-\frac{2}{f_t}dB_t+\frac{2Q}{f_t^2}dt\right)=-\Re\frac{2}{f_t}dB_t.
+	\end{align*}
+	Now it is clear that $\fh_t\in\mathcal M_{c,\text{loc}}$.
+	
+	\underline{Calculating $d[\fh_t(y),\fh_t(z)]$:} To calculate the quadratic variation of a linear combination of local martingales like $(\fh_t,\rho)$ it is instructive\footnote{Think of the finite case, i.e. $\rho = \sum_{i=1}^n r_i\delta_{z_i}$, where $(\fh_t,\rho) = \sum_{i=1}^n r_i\fh_t(z_i)$. We cannot expect to get the quadratic variation $[(\fh_t,\rho)]$ without knowing the covariations $[\fh_t(z_i),\fh_t(z_j)]$.} to calculate the covariations $[\fh_t(x),\fh_t(y)]$. We will do so by recalling that, by conformal invariance, the (free boundary) Green's function of $\mathbb H\setminus K_T$ is given by $$G_t(x,y)\deq G(f_t(x),f_t(y)),$$
+	where $G(x,y)\deq -\log|x-y|-\log|x-\overline y|$ is the Green's function of $\mathbb H$ (which can be seen by a reflection argument).
+	
+	In order to apply (stochastic) Fubini later on we will show write $d[\fh_t(x),\fh_t(y)]$ in terms of $G_t$. To be more precise we show that $-dG_t(x,y)=\Re\frac{2}{f_t(x)}\Re\frac{2}{f_t(y)}dt$, which is equal to $d[\fh_t(x),\fh_t(y)]$ (by our calculation of $d\fh_t(z)$).
+	\begin{align*}
+		-dG_t(x,y)&\eqbydef -d\Re\log[f_t(x)-f_t(y)]-d\Re\log[f_t(x)-\overline{f_t(y)}]\\
+		&=2\Re\left[\frac{f_t(x)^{-1}-f_t(y)^{-1}}{f_t(x)-f_t(y)}+\frac{f_t(x)^{-1}-\overline{f_t(y)^{-1}}}{f_t(x)-\overline{f_t(y)}}\right]dt\\
+		&=2\Re\left[f_t(x)^{-1}f_t(y)^{-1}+f_t(x)^{-1}\overline{f_t(y)^{-1}}\right]dt\\
+		&=2\Re\left[f_t(x)^{-1}\left(2\frac{f_t(y)^{-1}+\overline{f_t(y)^{-1}}}{2}\right)\right]dt\\
+		&=4\Re\left[f_t(x)^{-1}\Re(f_t(y)^{-1})\right]dt,
+	\end{align*}
+	where the first equality holds since $d\log[f_t(x)-f_t(y)]=\frac{1}{f_t(x)-f_t(y)}(df_t(x)-df_t(y))+0$ (the quadratic variation of the difference $f_t(x)-f_t(y)$ vanishes since the Brownian motions cancel out each other) and $df_t(x)-df_t(y)=-\frac{2}{f_t(x)}dt-\frac{2}{f_t(y)}$ (the Brownian motions cancel again). The second equality holds by the identity $\frac{\frac{1}{a}-\frac{1}{b}}{a-b}=-\frac{1}{ab}$.
+	
+	\underline{Showing that $\fh_t(z)\in\mathcal M_c$:} To show that $\fh_t(z)$ is a true (continuous) martingale we note that we already know that it can be parameterized by its quadratic variation so that it essentially becomes a Brownian motion. So one way to see that $\fh_t(z)$ is indeed a martingale is to show that this random stopping time given by the quadratic variation $[\fh_t(z)]$ (which is obviously increasing in $t$) is bounded by some constant times $t$ uniformly for all $z$. Actually it suffices to fix any $\rho\in H_s$ and to show that this holds uniformly for all $z$ in the (compact) support of of $\rho$. This can be checked by noting that, by the Loewner evolution we have that $$|\frac{\partial}{\partial t} C_t(z)|\leq \text{const}(\rho),$$ where $C_t(z)\deq \log\Im f_t(z)+\Re\log f_t'(z)$. This can be seen to be the quadratic variation $[\fh_t(z)]$ by taking its derivative $dC_t(z)$ (using Ito's formula) and noting that it this is equal to $\lim_{x,y\rightarrow z} -dG_t(x,y)$.
+	
+	\underline{Showing that $(\fh_t,\rho)\in\mathcal M$:} We would like to use conditional Fubini to interchange the conditional expectation and the integral from $(\fh,\rho)$ so that we can use the martingale property of $\fh_t(z)$ to get
+		\begin{align*}
+			\mathbb E[(\fh_t,\rho)|\mathcal F_s]&=(\mathbb E[\fh_t|\mathcal F_s],\rho)\\
+			&=(\fh_s,\rho),
+		\end{align*}
+		showing that $(\fh_t,\rho)$ is a martingale. To do that we have to check that for $\fh_t(z)$ is $L^1(\text{supp}(\rho)\times\Omega)$ for any fixed $\rho$ and all $t$. (Recall that $\Omega$ denotes the probability space we are taking expectations over.)
+		This is given if the expectation of $\fh_t(z)$ is bounded uniformly in $z\in\text{supp}(\rho)$, which is true since - similar to Brownian motion (note that it is only rescaled up to a uniformly bounded constant factor - we have $\mathbb P(|\fh_t(z)|\geq\lambda)\leq e^{-\lambda c}$, where $c>0$ is some constant.
+	
+	\underline{Showing that $(\fh_t,\rho)$ is almost surely continuous:} \todo{???}
+	
+	\underline{Showing that $d[(\fh_t,\rho)]=-dE_t(\rho)$:} Note that $[(\fh_t,\rho)]$ is characterised by the fact that $(\fh_t,\rho)(\fh_t,\rho)^2-[(\fh_t,\rho)]\in\mathcal M_{c,\text{loc}}$. Knowing from previous calculations that the covariation of $\fh_t(x)$ and $\fh_t(y)$ is $-G_t(x,y)$, and that $\fh_t(z)\in\mathcal M_c$, we have that $$\fh_t(x)\fh_t(y)+G_t(x,y)$$ is a continuous martingale for any $x,y\in\mathbb H$. Now we would like to use (conditional) Fubini to argue that $(\fh_t,\rho)^2+\int \rho(x)G_t(x,y)\rho(y)dxdy$ is a continuous martingale. To do that we notice that $G_t(x,y)$ is non-increasing in $t$ and, just as before, $\fh_t(z)$ have laws decaying exponentially fast, uniformly in $z\in\text{supp}(\rho)$.
 \end{proof}
 
 \section{Connection to the KPZ formula}
@@ -881,6 +938,7 @@ Now we can state (without proof) one of the central results of \cite{Dup10}:
 \begin{thebibliography}{00}
 \bibitem{She07} S. Sheffield: \emph{Gaussian free fields for mathematicians}, Arxiv: 0312099
 \bibitem{Dup10} B. Duplantier and S. Sheffield: \emph{Liouville Quantum Gravity and KPZ}, Arxiv: 0808.1560v2
+\bibitem{She15} S. Sheffield: \emph{Conformal weldings of random surfaces: SLE and the quantum gravity zipper}, Arxiv: 1012.4797
 %\bibitem{HK14} L. Holst, T. Konstantopoulos: \emph{Runs in coin tossing: a general approach for deriving distributions for functionals}, Arxiv: 1407.6831
 %\bibitem{AGZ10} G. Anderson, A. Guionnet, O. Zeitouni: \emph{An Introduction to Random Matrices}, Cambridge University Press, 2010
 \end{thebibliography}
